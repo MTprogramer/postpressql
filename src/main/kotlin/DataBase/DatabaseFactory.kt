@@ -1,5 +1,6 @@
 package DataBase
 
+import Table.TodoTable
 import Table.UserTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -19,8 +20,38 @@ object DatabaseFactory {
         // Start a transaction and create the UserTable schema if it doesn't exist
         transaction {
             SchemaUtils.create(UserTable)
+            SchemaUtils.create(TodoTable)
+
+            // Alter the UserTable to add a new column 'phone_number' if it doesn't already exist
+            addColumnIfNotExists("user", "password", "VARCHAR(15)")
         }
     }
+
+    // Function to add a column to a table if it does not exist
+    private fun addColumnIfNotExists(tableName: String, columnName: String, columnType: String) {
+        // SQL command to check if the column already exists
+        val checkColumnQuery = """
+        SELECT column_name 
+        FROM information_schema.columns 
+        WHERE table_name='$tableName' AND column_name='$columnName';
+    """
+
+        // Execute the check and add column if not found
+        transaction {
+            // Check if column exists
+            val columnExists = exec(checkColumnQuery) { rs ->
+                rs.next() // Move the cursor to the first row
+            }
+
+            // If the column doesn't exist, add it to the table
+            if (!columnExists!!) {
+                val addColumnQuery = """ALTER TABLE "$tableName" ADD COLUMN $columnName $columnType;"""
+                exec(addColumnQuery) // Execute the ALTER TABLE query
+            }
+        }
+    }
+
+
 
     // Configure and return a HikariDataSource, which manages the database connection pool
     private fun hikari(): HikariDataSource {

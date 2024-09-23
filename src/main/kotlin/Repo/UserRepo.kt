@@ -88,6 +88,7 @@ class UserRepo : UserDao {
             name = row[UserTable.userName],
             email = row[UserTable.userEmail],
             age = row[UserTable.userAge],
+            password = row[UserTable.password],
             userId = row[UserTable.userId])
     }
 

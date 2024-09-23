@@ -4,6 +4,7 @@ val logback_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.20"
+    kotlin("plugin.serialization") version "2.0.20"
     id("io.ktor.plugin") version "3.0.0-rc-1"
 }
 
@@ -35,4 +36,11 @@ dependencies {
     implementation ("org.jetbrains.exposed:exposed-dao:0.42.0")
     implementation ("org.postgresql:postgresql:42.6.0")
     implementation ("com.zaxxer:HikariCP:5.0.1")
+
+
+    // For Ktor and JWT
+    implementation("io.ktor:ktor-server-auth:2.3.4")
+    implementation("io.ktor:ktor-server-auth-jwt:2.3.4")
+
+
 }

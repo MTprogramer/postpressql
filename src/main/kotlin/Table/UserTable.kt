@@ -13,7 +13,8 @@ object UserTable : Table()
     val userId : Column<Int> = integer("userId").autoIncrement()
     val userAge : Column<Int> = integer("userAge")
     val userName : Column<String> = varchar("userName" , 10000 )
-    val userEmail : Column<String> = varchar("userEmail" , 10000 )
+    val password : Column<String> = varchar("password" , 1000 )
+    val userEmail : Column<String> = varchar("userEmail" , 10000 ).uniqueIndex()
 
     override val primaryKey: PrimaryKey = PrimaryKey(userId)
 
