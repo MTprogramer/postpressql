@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.update
+import javax.swing.text.StyledEditorKit.BoldAction
 
 class UserRepo : UserDao {
 
@@ -21,17 +22,31 @@ class UserRepo : UserDao {
      * these all functions structured in UserDao
      */
 
-    override suspend fun inset(name: String, email: String, age: Int): UserData? {
+    override suspend fun inset(name: String, email: String , passwordd: String, age: Int): UserData? {
         var statement : InsertStatement<Number>? = null
         DatabaseFactory.dbQuery {
             statement = UserTable.insert {
                 it[userName] = name
                 it[userEmail] = email
                 it[userAge] = age
+                it[password] = passwordd
             }
         }
         return rowTostudent(statement?.resultedValues?.get(0))
     }
+
+    override suspend fun updateUser(name: String, email: String, passwordd: String, age: Int, id: Int): Boolean {
+        return DatabaseFactory.dbQuery {
+            val updatedRows = UserTable.update({ UserTable.userId eq id }) {
+                it[userName] = name
+                it[userEmail] = email
+                it[userAge] = age
+                it[password] = passwordd
+            }
+            updatedRows > 0 // Return true if at least one row was updated, otherwise false
+        }
+    }
+
 
     override suspend fun getAll(): List<UserData> =
         DatabaseFactory.dbQuery {
@@ -48,6 +63,16 @@ class UserRepo : UserDao {
                     rowTostudent(it)
                 }.singleOrNull()
         }
+
+    override suspend fun getByEmail(email : String) : UserData? =
+        DatabaseFactory.dbQuery {
+            UserTable.select{ UserTable.userEmail.eq(email)}
+                .map {
+                    rowTostudent(it)
+                }.singleOrNull()
+        }
+
+
 
 
     override suspend fun deleteById(id: Int): Boolean =

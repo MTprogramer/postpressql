@@ -1,7 +1,6 @@
 package com.example.Auth
 
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import java.util.Date
 
@@ -15,10 +14,10 @@ class JwtService {
         .withIssuer(issuer)
         .build()
 
-    fun generateToken(user_id: Int): String = JWT.create()
+    fun generateToken(userId: Int): String = JWT.create()
         .withSubject("Authentication")
         .withIssuer(issuer)
-        .withClaim("userId", user_id)
+        .withClaim("userId", userId)
         .withExpiresAt(Date(System.currentTimeMillis() + 3600000))
         .sign(algorithm)
 
