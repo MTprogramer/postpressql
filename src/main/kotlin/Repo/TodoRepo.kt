@@ -25,6 +25,14 @@ class TodoRepo : TodoDao {
             }
         }
 
+    override suspend fun getAllTodoById(id: Int): List<TodoDataModel> =
+        DatabaseFactory.dbQuery {
+            TodoTable.select ( TodoTable.userId.eq(id)).mapNotNull {
+                rowTostudent(it)
+            }
+        }
+
+
 
     override suspend fun getById(id: Int): TodoDataModel? =
         DatabaseFactory.dbQuery {

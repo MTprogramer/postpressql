@@ -5,6 +5,7 @@ import DataModel.TodoDataModel
 interface TodoDao
 {
     suspend fun getAllTodo():List<TodoDataModel>
+    suspend fun getAllTodoById(id: Int):List<TodoDataModel>
     suspend fun getById(id: Int) : TodoDataModel?
     suspend fun deleteById(id : Int) : Boolean
     suspend fun deleteAllByUserId(userid : Int) : Boolean

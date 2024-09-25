@@ -17,5 +17,6 @@ fun Application.module() {
     DatabaseFactory.init()
     Session()
     configureSerialization()
+    configAuth()  // Install and configure JWT authentication
     configureRouting()
 }

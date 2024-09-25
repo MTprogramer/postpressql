@@ -2,6 +2,7 @@ package com.example.plugins
 
 import Repo.TodoRepo
 import Repo.UserRepo
+import Routing.todo
 import Routing.user
 import com.example.Auth.JwtService
 import io.ktor.server.application.*
@@ -15,5 +16,6 @@ fun Application.configureRouting() {
     val hashFunction = { s: String -> s }
     routing {
         user(db , todoRepo , jwtService , hashFunction)
+        todo(db , todoRepo)
     }
 }
