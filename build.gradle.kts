@@ -41,6 +41,7 @@ dependencies {
     // For Ktor and JWT
     implementation("io.ktor:ktor-server-auth:2.3.4")
     implementation("io.ktor:ktor-server-auth-jwt:2.3.4")
+    implementation(kotlin("script-runtime"))
 
 
 }

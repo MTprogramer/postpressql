@@ -11,10 +11,11 @@
 ///**
 // * railway db data
 // */
-//JDBC_DATABASE_URL=jdbc:postgresql://junction.proxy.rlwy.net:12684/railway?user=postgres&password=fzcGisRIhMSNZjgePlEGeYbArmaqhTXT
+//JDBC_DATABASE_URL=jdbc:postgresql://autorack.proxy.rlwy.net:21750/railway?user=postgres&password=qVyLaqrtiSYyeLxtmmtXimBSxlHaqMnR
 //JDBC_DRIVER=org.postgresql.Driver
 //JWT_SECRET=122134435665788790090987
 //SECRET_KEY=122134435665788790090987
+
 
 
 
