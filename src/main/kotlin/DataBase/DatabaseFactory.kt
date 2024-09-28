@@ -58,10 +58,19 @@ object DatabaseFactory {
         val config = HikariConfig() // Create a new HikariConfig object to configure the connection pool
 
         // Set the JDBC driver class name from an environment variable
-        config.driverClassName = System.getenv("JDBC_DRIVER")
 
-        // Set the JDBC URL for the database connection from an environment variable
-        config.jdbcUrl = System.getenv("JDBC_DATABASE_URL")
+        // Log or throw if JDBC_DRIVER is not set
+        val driverClassName = System.getenv("JDBC_DRIVER") ?: throw IllegalArgumentException("JDBC_DRIVER environment variable not set")
+        config.driverClassName = driverClassName
+
+        // Log or throw if JDBC_DATABASE_URL is not set
+        val jdbcUrl = System.getenv("JDBC_DATABASE_URL") ?: throw IllegalArgumentException("JDBC_DATABASE_URL environment variable not set")
+        config.jdbcUrl = jdbcUrl
+
+        println("JDBC Driver: ${System.getenv("JDBC_DRIVER")}")
+        println("JDBC URL: ${System.getenv("JDBC_DATABASE_URL")}")
+
+
 
         // Set the maximum number of connections in the pool to 3
         config.maximumPoolSize = 3
